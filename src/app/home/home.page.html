@@ -1,17 +1,68 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Chat 2025W
-    </ion-title>
+    <ion-title>Chat 2025W</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+
+  <form (ngSubmit)="sendMessage()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="name" name="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input [(ngModel)]="lastName" name="lastName"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Edad</ion-label>
+        <ion-input type="number" [(ngModel)]="age" name="age"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="pass" name="pass"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Teléfono</ion-label>
+        <ion-input type="tel" [(ngModel)]="telf" name="telf"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Dirección</ion-label>
+        <ion-input [(ngModel)]="direccion" name="direccion"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Fecha de Nacimiento</ion-label>
+        <ion-input [(ngModel)]="fechaNacimiento" name="fechaNacimiento"></ion-input>
+      </ion-item>
+    
+      
+  
+
+    </ion-list>
+  </form>
+
   <ion-list>
     <ion-item *ngFor="let msg of messages">
       <ion-label>
-        <h3>{{ msg.sender }}</h3>
-        <p>{{ msg.text }}</p>
+        <h3>{{ msg.name }} {{ msg.lastName }}</h3>
+        <p>{{ msg.email }}</p>
+        <p>{{ msg.age }}</p>
+        <p>{{ msg.telf }}</p>
+        <p>{{ msg.direccion }}</p>
+        <p>{{ msg.fechaNacimiento}}</p>
+        <p>{{ msg.sender }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
@@ -19,7 +70,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-input [(ngModel)]="newMessage" placeholder="Escribe un mensaje" fill="outline"></ion-input>
     <ion-button expand="block" (click)="sendMessage()">Enviar</ion-button>
   </ion-toolbar>
 </ion-footer>

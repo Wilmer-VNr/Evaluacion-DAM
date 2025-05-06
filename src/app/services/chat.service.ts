@@ -1,37 +1,57 @@
 import { Injectable } from '@angular/core';
-import  {Firestore,collection,addDoc,collectionData,query,orderBy
-} from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, query, orderBy } from '@angular/fire/firestore';
+import { IonDatetime } from '@ionic/angular/standalone';
+import { Observable } from 'rxjs';
 
-import { Observable } from "rxjs";
-
-export interface Message{
-  text:string;
+export interface Message {
+  name: string;
+  lastName: string;
+  age: number;
+  email: string;
+  pass: string;
+  telf: number;
+  direccion: string;
+  fechaNacimiento: string;
   createdAt: number;
-  sender:string;
+  sender: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
+  constructor(private firestore: Firestore) {}
 
-  constructor(private firestore: Firestore) { }
+  getMessages(): Observable<Message[]> {
+    const messagesRef = collection(this.firestore, 'messages');
+    const q = query(messagesRef, orderBy('createdAt'));
+    return collectionData(q, { idField: 'id' }) as Observable<Message[]>;
+  }
 
-
-getMessages(): Observable<Message[]>
-{
-  const messagesRef = collection(this.firestore,'messages');
-  const q=query(messagesRef, orderBy('createdAt'));
-  return collectionData(q,{idField:'id'}) as Observable<Message[]>
-}
-
-sendMessage(text:string, sender:string){
-  const messagesRef = collection(this.firestore,'messages');
-  const message: Message={
-    text,
-    createdAt:Date.now(),
-    sender
-  };
-  return addDoc(messagesRef, message)
-}
+  sendMessage(
+    name: string,
+    lastName: string,
+    age: number,
+    email: string,
+    pass: string,
+    telf: number,
+    direccion: string,
+    fechaNacimiento: string,
+    sender: string
+  ) {
+    const messagesRef = collection(this.firestore, 'messages');
+    const message: Message = {
+      name,
+      lastName,
+      age,
+      email,
+      pass,
+      telf,
+      direccion,
+      fechaNacimiento,
+      createdAt: Date.now(),
+      sender
+    };
+    return addDoc(messagesRef, message);
+  }
 }
